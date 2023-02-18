@@ -14,10 +14,6 @@ def Bubblesort(lista):
                 lista[l] = b
                 lista[l + 1] = a
     return lista
-
-    return lista
-
-
 def BinarySearch(lista, valor):
     inicio = 0
     final = 99
