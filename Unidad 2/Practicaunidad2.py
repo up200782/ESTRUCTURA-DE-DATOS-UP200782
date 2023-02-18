@@ -1,12 +1,17 @@
+#Aqui se declara la libreria que hace que se generen los numeros aleatorios y ademas
+#se declaran las variables
 import random
 aleatorios = random.sample(range(100, 500), 100)
 lista = aleatorios
 valor = 404
 
-
+#Aqui se declara la funcion de Bubblesort que ordena los numeros aleatorios
 def Bubblesort(lista):
+  # i es el contador de las veces que se repite el proceso
     l = 0
+    #Aqui se usa un for para declarar la longitud del proceso
     for i in range(0, len(lista)-1):
+        #Aqui se declara otro for para comparar los valores
         for l in range(0, len(lista)-1-l):
             a = lista[l]
             b = lista[l+1]
