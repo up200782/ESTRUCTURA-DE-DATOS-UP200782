@@ -1,34 +1,42 @@
-def main():
-    arr_int = []
-    n = int(input("Ingrese el número de elementos: "))
-    for i in range(n):
-        while True:
-            try:
-                element = input(f"Ingrese el elemento {i+1}: ")
-                if element == "":
-                    raise ValueError
-                arr_int.append(int(element))
-                break
-            except ValueError:
-                print("Ingrese un número entero válido.")
-    print("Lista antes de ordenar:")
-    print(arr_int)
-    print("Lista después de ordenar:")
-    print(quicksort(arr_int))
+import tkinter as tk
 
-def quicksort(arr):
-    if len(arr) <= 1:
-        return arr
-    else:
-        pivot = arr[0]
-        left = []
-        right = []
-        for i in range(1, len(arr)):
-            if arr[i] < pivot:
-                left.append(arr[i])
-            else:
-                right.append(arr[i])
-        return quicksort(left) + [pivot] + quicksort(right)
+WIDTH = 400
+HEIGHT = 400
+BALL_SIZE = 20
+STEP_SIZE = 5
+
+class Ball:
+    def __init__(self, canvas, color):
+        self.canvas = canvas
+        self.id = canvas.create_oval(WIDTH/2-BALL_SIZE/2, HEIGHT/2-BALL_SIZE/2, WIDTH/2+BALL_SIZE/2, HEIGHT/2+BALL_SIZE/2, fill=color)
+        self.canvas.bind_all("<Button-1>", self.jump)
+
+    def jump(self, event):
+        self.canvas.move(self.id, 0, -BALL_SIZE*2)
+
+    def move(self):
+        pass
+
+def main():
+    root = tk.Tk()
+    root.title("Jumping Ball")
+
+    canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT)
+    canvas.pack()
+
+    ball = Ball(canvas, "red")
+
+    while True:
+        ball.move()
+        root.update()
+        tk.time.sleep(0.01)
+
+    root.mainloop()
+
+
 
 if __name__ == "__main__":
     main()
+canvas.mainloop()
+
+

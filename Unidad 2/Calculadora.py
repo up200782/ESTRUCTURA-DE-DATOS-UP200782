@@ -4,52 +4,25 @@ from tkinter import *
 # Definimos una función para convertir la expresión infix a postfix
 def infix_to_postfix(expression):
     precedence = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3,
-                  '(': 0, 'sin': 4, 'cos': 4, 'tan': 4, 'sqrt': 4, 'log': 4, 'exp': 4, 'abs': 4}
+                  '(': 0, 'sin': 4, 'cos': 4, 'tan': 4, 'log': 4, 'asin' : 4, 'acos': 4, 'atan':4}
     stack = []
     postfix = []
     for token in expression.split():
         if token.replace('.','',1).isdigit() or (token.startswith('-') and token[1:].replace('.','',1).isdigit()):
             postfix.append(token)
         elif token in precedence.keys():
-            if token == '(':
-                stack.append(token)
-            elif token == ')':
-                while stack and stack[-1] != '(':
-                    postfix.append(stack.pop())
-                if not stack:
-                    raise ValueError("Error: paréntesis desbalanceados")
-                stack.pop()
-            else:
-                while stack and precedence[token] <= precedence.get(stack[-1], 0):
-                    postfix.append(stack.pop())
-                stack.append(token)
-        elif token in ['sin', 'cos', 'tan', 'log', 'asin', 'acos', 'atan']:
-            if token == 'sin':
-                operand1 = stack.pop()
-                operand1 = math.radians(operand1)
-                result = math.sin(operand1)
-            elif token == 'cos':
-                operand1 = stack.pop()
-                operand1 = math.radians(operand1)
-                result = math.cos(operand1)
-            elif token == 'tan':
-                operand1 = stack.pop()
-                operand1 = math.radians(operand1)
-                result = math.tan(operand1)
-            elif token == 'log':
-                operand1 = stack.pop()
-                result = math.log(operand1)
-            elif token == 'asin':
-              operand1 = stack.pop()
-              result = math.asin(operand1)
-              result = math.degrees(result)
-            stack.append(result)
+            while stack and precedence[token] <= precedence.get(stack[-1], 0):
+                postfix.append(stack.pop())
+            stack.append(token)
+        elif token == '(':
+            stack.append(token)
+        elif token == ')':
+            while stack and stack[-1] != '(':
+                postfix.append(stack.pop())
+            stack.pop()
     while stack:
-        if stack[-1] == '(':
-            raise ValueError("Error: paréntesis desbalanceados")
         postfix.append(stack.pop())
     return ' '.join(postfix)
-
 
 # Definimos una función para evaluar la expresión en postfix
 def evaluate_postfix(expression):
